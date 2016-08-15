@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import './App.css';
-
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import ApolloClient from 'apollo-client';
 import { graphql, ApolloProvider } from 'react-apollo';
 import gql from 'graphql-tag';
 
-const client = new ApolloClient({
-  networkInterface: createNetworkInterface('http://localhost:64617/')
-});
+import './App.css';
+import InBrowserNetworkInterface from './in-browser-network-interface';
+import schema from './schema';
+
+const networkInterface = new InBrowserNetworkInterface({ schema });
+const client = new ApolloClient({ networkInterface });
 
 class List extends Component {
   render() {
-    const { loading, people } = this.props;
+    const { loading, posts } = this.props;
 
     if (loading) {
       return <p>Loading</p>
@@ -19,31 +20,31 @@ class List extends Component {
 
     return (
       <ul>
-        {people.map(p => <li key={p.name}>{p.name} - {p.height}cm - {p.mass}kg</li>)}
+        {posts.map(p => <li key={p.id}>{p.title}</li>)}
       </ul>
     )
   }
 }
 
-const ListWithData = graphql(
-  gql`{
-    allPeople(first: 10) {
-      people {
-        name
-        height
-        mass
-      }
+const POSTS_QUERY = gql`{
+  author(firstName: "Sashko", lastName: "Stubailo") {
+    id
+    posts {
+      id
+      title
+      text
     }
-  }`,
-  null,
-  ({ loading, allPeople }) => {
-    return {
-      loading: loading,
-      people: allPeople && allPeople.people,
-    };
   }
-)(List);
+}`
 
+const withPosts = graphql(POSTS_QUERY, {
+  props: ({data: { loading, author, errors }}) => ({
+    loading,
+    posts: author && author.posts,
+  }),
+});
+
+const ListWithData = withPosts(List);
 
 class App extends Component {
   render() {
