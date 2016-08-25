@@ -6,18 +6,27 @@ const authors = [
 ];
 
 const posts = [
-  { id: 1, authorId: 2, title: 'GraphQL Rocks', text: 'GraphQL Rocks' }
+  { id: 1, authorId: 1, title: 'Introduction to GraphQL' },
+  { id: 2, authorId: 2, title: 'GraphQL Rocks' },
+  { id: 3, authorId: 2, title: 'Advanced GraphQL' },
 ];
 
 const resolveFunctions = {
   RootQuery: {
-    author(_, { firstName, lastName }) {
-      return find(authors, { firstName, lastName });
+    authors() {
+      return authors;
     },
   },
   RootMutation: {
-    // XXX: todo
-    createAuthor() {}
+    createPost(_, { title, authorId }) {
+      const post = {
+        id: posts.length + 1,
+        title,
+        authorId,
+      };
+      posts.push(post);
+      return post;
+    }
   },
   Author: {
     posts(author) {

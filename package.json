@@ -17,7 +17,7 @@
     "graphql-tools": "^0.6.4",
     "lodash": "^4.15.0",
     "react": "^15.2.1",
-    "react-apollo": "^0.4.0-rc2",
+    "react-apollo": "^0.4.7",
     "react-dom": "^15.2.1"
   },
   "scripts": {

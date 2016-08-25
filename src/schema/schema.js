@@ -8,31 +8,21 @@ type Author {
 
 type Post {
   id: Int!
-  tags: [String]
   title: String
-  text: String
-  views: Int
   author: Author
 }
 
-# the schema allows the following two queries:
+# the schema allows the following query:
 type RootQuery {
-  author(firstName: String, lastName: String): Author
+  authors: [Author]
 }
 
-# this schema allows the following two mutations:
+# this schema allows the following mutation:
 type RootMutation {
-  createAuthor(
-    firstName: String!
-    lastName: String!
-  ): Author
-
-#  createPost(
-#    tags: [String!]!
-#    title: String!
-#    text: String!
-#    authorId: Int!
-#  ): Post
+  createPost (
+    title: String!
+    authorId: Int!
+  ): Post
 }
 
 # we need to tell the server which types represent the root query
