@@ -10,26 +10,26 @@ type Post {
   id: Int!
   title: String
   author: Author
+  votes: Int
 }
 
 # the schema allows the following query:
-type RootQuery {
-  authors: [Author]
+type Query {
+  posts: [Post]
 }
 
 # this schema allows the following mutation:
-type RootMutation {
-  createPost (
-    title: String!
-    authorId: Int!
+type Mutation {
+  upvotePost (
+    postId: Int!
   ): Post
 }
 
 # we need to tell the server which types represent the root query
 # and root mutation types. We call them RootQuery and RootMutation by convention.
 schema {
-  query: RootQuery
-  mutation: RootMutation
+  query: Query
+  mutation: Mutation
 }
 `;
 
