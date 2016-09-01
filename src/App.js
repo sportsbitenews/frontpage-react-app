@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import ApolloClient from 'apollo-client';
+import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { graphql, ApolloProvider } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import './App.css';
-import InBrowserNetworkInterface from './in-browser-network-interface';
 
 class PostUpvoter extends Component {
   constructor() {
@@ -36,7 +35,7 @@ class PostUpvoter extends Component {
 }
 
 const upvotePost = gql`
-  mutation upvotePost($postId: Int) {
+  mutation upvotePost($postId: Int!) {
     upvotePost(postId: $postId) {
       id
       votes
@@ -91,9 +90,8 @@ const PostListWithData = graphql(allPosts, {
 class App extends Component {
   constructor(...args) {
     super(...args);
-    const { schema } = this.props;
 
-    const networkInterface = new InBrowserNetworkInterface({ schema });
+    const networkInterface = createNetworkInterface('http://localhost:8080/graphql');
     this.client = new ApolloClient({
       networkInterface,
       dataIdFromObject: r => r.id,
