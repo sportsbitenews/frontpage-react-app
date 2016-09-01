@@ -5,13 +5,6 @@ import gql from 'graphql-tag';
 
 import './App.css';
 import InBrowserNetworkInterface from './in-browser-network-interface';
-import schema from './schema';
-
-const networkInterface = new InBrowserNetworkInterface({ schema });
-const client = new ApolloClient({
-  networkInterface,
-  dataIdFromObject: r => r.id,
-});
 
 class PostUpvoter extends Component {
   constructor() {
@@ -96,9 +89,19 @@ const PostListWithData = graphql(allPosts, {
 })(PostList);
 
 class App extends Component {
+  constructor(...args) {
+    super(...args);
+    const { schema } = this.props;
+
+    const networkInterface = new InBrowserNetworkInterface({ schema });
+    this.client = new ApolloClient({
+      networkInterface,
+      dataIdFromObject: r => r.id,
+    });
+  }
   render() {
     return (
-      <ApolloProvider client={client}>
+      <ApolloProvider client={this.client}>
         <PostListWithData />
       </ApolloProvider>
     );
