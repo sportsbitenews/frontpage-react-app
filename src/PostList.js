@@ -14,7 +14,7 @@ function PostList({ data: { loading, posts } }) {
           <li key={post.id}>
             {post.title} by {' '}
             {post.author.firstName} {post.author.lastName} {' '}
-            ({post.votes} votes)
+            <span>({post.votes} votes)</span>
 
             <PostUpvoter postId={post.id} />
           </li>
