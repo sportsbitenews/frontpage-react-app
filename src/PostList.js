@@ -29,6 +29,13 @@ function PostList({ data: { loading, posts } }) {
 // The `graphql` wrapper executes a GraphQL query and makes the results
 // available on the `data` prop of the wrapped component (PostList here)
 export default graphql(gql`
+  subscription postUpvoted {
+    postUpvoted {
+      id
+      votes
+    }
+  }
+`)(graphql(gql`
   query allPosts {
     posts {
       id
@@ -41,4 +48,4 @@ export default graphql(gql`
       }
     }
   }
-`)(PostList);
+`)(PostList));
