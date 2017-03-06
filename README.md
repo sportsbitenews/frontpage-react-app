@@ -1,5 +1,7 @@
 # Apollo React Hello World app
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/apollographql/frontpage-react-app.svg)](https://greenkeeper.io/)
+
 This is the simple example React/Apollo app that lives at dev.apollodata.com.
 
 ## Installation
