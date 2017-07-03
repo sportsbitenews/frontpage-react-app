@@ -12,7 +12,7 @@ function PostList({ data: { loading, posts } }) {
   } else {
     return (
       <ul>
-        {posts.sort((x, y) => y.votes - x.votes).map(post =>
+        {posts.concat().sort((x, y) => y.votes - x.votes).map(post =>
           <li key={post.id}>
             {post.title} by {' '}
             {post.author.firstName} {post.author.lastName} {' '}
