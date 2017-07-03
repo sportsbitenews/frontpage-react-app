@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloClient, ApolloProvider } from 'react-apollo';
+import { createApolloFetch } from 'apollo-fetch';
+import { print } from 'graphql/language/printer';
 
 import './App.css';
 
@@ -11,12 +12,14 @@ class App extends Component {
     super(...args);
 
     // See server code here: https://launchpad.graphql.com/1jzxrj179
-    const networkInterface = createNetworkInterface('https://1jzxrj179.lp.gql.zone/graphql');
+    const apolloFetch = createApolloFetch({ uri: 'https://1jzxrj179.lp.gql.zone/graphql' });
 
-    this.client = new ApolloClient({
-      networkInterface,
-      dataIdFromObject: r => r.id,
-    });
+    // This is creating a network interface using the new apollo-fetch package
+    const networkInterface = {
+      query: (req) => apolloFetch({...req, query: print(req.query)})
+    };
+
+    this.client = new ApolloClient({ networkInterface });
   }
   render() {
     return (
