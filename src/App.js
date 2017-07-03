@@ -10,7 +10,9 @@ class App extends Component {
   constructor(...args) {
     super(...args);
 
-    const networkInterface = createNetworkInterface('http://localhost:8080/graphql');
+    // See server code here: https://launchpad.graphql.com/1jzxrj179
+    const networkInterface = createNetworkInterface('https://1jzxrj179.lp.gql.zone/graphql');
+
     this.client = new ApolloClient({
       networkInterface,
       dataIdFromObject: r => r.id,
