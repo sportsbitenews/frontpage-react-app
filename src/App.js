@@ -11,11 +11,13 @@ class App extends Component {
     super(...args);
 
     // See server code here: https://launchpad.graphql.com/1jzxrj179
-    const networkInterface = createNetworkInterface('https://1jzxrj179.lp.gql.zone/graphql');
+    const networkInterface = createNetworkInterface(
+      'https://1jzxrj179.lp.gql.zone/graphql'
+    );
 
     this.client = new ApolloClient({
       networkInterface,
-      dataIdFromObject: r => r.id,
+      dataIdFromObject: r => r.id
     });
   }
   render() {

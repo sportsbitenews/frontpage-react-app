@@ -6,10 +6,8 @@ import { graphql } from 'react-apollo';
 // Other props of the wrapping component are passed through.
 function PostUpvoter({ mutate, postId }) {
   return (
-    <button onClick={() => mutate({ variables: { postId }})}>
-      Upvote
-    </button>
-  )
+    <button onClick={() => mutate({ variables: { postId } })}>Upvote</button>
+  );
 }
 
 // You can also use `graphql` for GraphQL mutations

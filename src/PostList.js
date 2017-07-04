@@ -14,10 +14,8 @@ function PostList({ data: { loading, posts } }) {
       <ul>
         {posts.concat().sort((x, y) => y.votes - x.votes).map(post =>
           <li key={post.id}>
-            {post.title} by {' '}
-            {post.author.firstName} {post.author.lastName} {' '}
+            {post.title} by  {post.author.firstName} {post.author.lastName} {' '}
             <span>({post.votes} votes)</span>
-
             <PostUpvoter postId={post.id} />
           </li>
         )}
